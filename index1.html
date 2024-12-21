@@ -1,34 +1,3 @@
-<?php
-    
-    session_start();
-    require_once "koneksi.php";
-
-    // Query update stok dgn rumus = stok - jumlah pembelian;
-    // Ambil stok awal barang
-    $sql_cek_stok = "SELECT stok FROM produk WHERE id_produk";
-    $result = $con->query($sql_cek_stok);
-    $row = $result->fetch_assoc();
-    //$stok_awal = $row['stok'];
-
-    //Hitung stok barang
-   // $stok_baru = $stok_awal-$jumlah_beli;
-
-    //Update stok barang
-    //$sql_update_stok = "UPDATE produk SET stok = $stok_baru WHERE id_produk";b
-
-    //Simpan data transaksi
-    //sql_insert_penjualan = "INSERT INTO penjualan (id_penjualan, id_user, id_produk,jumlah) VALUES ($id_penjualan, $id_user, $jumlah)";
-
-    //if ($con->query($sql_update_stok)=== TRUE && $conn->query($sql_insert_penjualan)===TRUE){
-      //echo "Transaksi berhasil dan stok berhasil dikurangi";
-    //} else {
-      //echo "Error:".$con->error;
-    //}
-
-    //$con->close();
-  ?>
-
-
 <html lang="en">
  <head>
   <meta charset="utf-8"/>
