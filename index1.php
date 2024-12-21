@@ -1,0 +1,624 @@
+<?php
+    
+    session_start();
+    require_once "koneksi.php";
+
+    // Query update stok dgn rumus = stok - jumlah pembelian;
+    // Ambil stok awal barang
+    $sql_cek_stok = "SELECT stok FROM produk WHERE id_produk";
+    $result = $con->query($sql_cek_stok);
+    $row = $result->fetch_assoc();
+    //$stok_awal = $row['stok'];
+
+    //Hitung stok barang
+   // $stok_baru = $stok_awal-$jumlah_beli;
+
+    //Update stok barang
+    //$sql_update_stok = "UPDATE produk SET stok = $stok_baru WHERE id_produk";b
+
+    //Simpan data transaksi
+    //sql_insert_penjualan = "INSERT INTO penjualan (id_penjualan, id_user, id_produk,jumlah) VALUES ($id_penjualan, $id_user, $jumlah)";
+
+    //if ($con->query($sql_update_stok)=== TRUE && $conn->query($sql_insert_penjualan)===TRUE){
+      //echo "Transaksi berhasil dan stok berhasil dikurangi";
+    //} else {
+      //echo "Error:".$con->error;
+    //}
+
+    //$con->close();
+  ?>
+
+
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   KicksLab
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  
+ </head>
+ <style>
+  header{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+}
+body{
+    font-family: roboto;
+    background: #769489;
+}
+.container {
+      padding: 1.5rem;
+    }
+    .slider-wrapper {
+      position: relative;
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+    .slider {
+      display: flex;
+      aspect-ratio: 16 / 9;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      box-shadow: 0 1.5rem 3rem -0.75rem hsla(0, 0%, 0%, 0.25);
+      border-radius: 0.5rem;
+      -ms-overflow-style: none; /* Hide scrollbar IE and Edge */
+      scrollbar-width: none; /* Hide scrollbar Firefox */
+    }
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .slider::-webkit-scrollbar {
+      display: none;
+    }
+    .slider img {
+      flex: 1 0 100%;
+      scroll-snap-align: start;
+      object-fit: cover;
+    }
+    .slider-nav {
+      display: flex;
+      column-gap: 1rem;
+      position: absolute;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+    }
+    .slider-nav a {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background-color: #f5efeb;
+      opacity: 0.75;
+      transition: opacity ease 250ms;
+    }
+    .slider-nav a:hover {
+      opacity: 1;
+    }
+.original-price {
+  text-decoration: line-through;
+  color: #666;
+}
+
+.discount-price {
+  font-weight: bold;
+  color: #333;
+}
+
+.discount-percentage {
+  font-size: 14px;
+  color: #666;
+}
+ </style>
+ <body class="">
+  <header class="bg-white shadow-lg">
+   <div class="container mx-auto px-6 py-3">
+    <div class="flex items-center justify-between">
+     <div class="text-2xl font-bold text-gray-800">
+        KicksLab
+     </div>
+     <nav class="flex space-x-4">
+      <div class="container">
+        <a class="px-1 font-medium" href="login.php">Login</a>
+        <a class="px-1 font-medium" href="registrasi.php">Register</a>
+        <a class="px-1 font-medium" href="logout.php">Logout</a>
+        </div>
+      </a>
+     </nav>
+    </div>
+   </div>
+  </header>
+  <main class="container mx-auto px-6 py-8">
+    <section class="container">
+      <div class="slider-wrapper">
+        <div class="slider">
+          <img id="slide-1" src="logokece.jpeg" alt="KicksLab Logo" />
+          <img id="slide-2" src="diskon.jpeg" alt="new balance 550" />
+          <img id="slide-3" src="Nb505.jpeg" alt="Asics" />
+          <img id="slide-4" src="pegasus.jpeg" alt="pegasus" />
+          <img id="slide-5" src="gelkayano.jpeg" alt="diskon sepatu" />
+          <img id="slide-6" src="converse.jpeg" alt="diskon sepatu" />
+          <img id="slide-7" src="airmax.jpeg" alt="diskon sepatu" />
+        </div>
+        <div class="slider-nav">
+          <a href="#slide-1"></a>
+          <a href="#slide-2"></a>
+          <a href="#slide-3"></a>
+          <a href="#slide-4"></a>
+          <a href="#slide-5"></a>
+          <a href="#slide-6"></a>
+          <a href="#slide-7"></a>
+        </div>
+      </div>
+    </section>
+  <h1 class="text-3xl font-bold text-white mb-6">
+    Our Collection
+   </h1>
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A stylish pair of running shoes in vibrant colors" class="w-full h-48 object-cover" height="300" src="nike pegasus.jpeg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Nike Pegasus 41
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Nike Pegasus 41 is a versatile and popular running shoe designed for comfort, performance, and durability.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+        <div class="discount-tag">
+          <span class="original-price">Rp 2.099.000</span>
+          <span class="discount-price">Rp 1.049.500</span>
+          <span class="discount-percentage">50% off</span>
+        </div>
+        <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Nike+Pegasus+41">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 10 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of elegant leather dress shoes in black" class="w-full h-48 object-cover" height="300" src="fila.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+        Fila Fusion Bank Skate
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The FILA Fusion Bank Skate is a lifestyle shoe designed by FILA, inspired by skateboarding culture.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 9.500.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Fila+Fusion-Bank-SKate+PlayStation+41">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 3 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of casual sneakers in white" class="w-full h-48 object-cover" height="300" src="Asics gel kayano 14.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Asics Gel-Kayano 14
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The ASICS Gel-Kayano 14 is a premium running shoe known for its exceptional comfort, stability, and timeless design.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 3.070.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Asics+Gel-Kayano+14">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 8 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of hiking boots in brown" class="w-full h-48 object-cover" height="300" src="chuck 70.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Converse Chuck Taylor 70's ALL STAR
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Converse Chuck Taylor 70's is a premium version of the classic Chuck Taylor All Star sneakers, celebrated for its vintage design, durability, and comfort.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 1.300.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Convers+Chuck-Taylor+70's">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 14 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of basketball shoes in red and black" class="w-full h-48 object-cover" height="300" src="550.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       New Balance 550 Green 
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The 550's low top, streamlined shape offers a sleek version of the heavy-duty designs of the late '80s, while its reliable leather upper shape is a classic look for any era.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <div class="discount-tag">
+          <span class="original-price">Rp 2.225.000</span>
+          <span class="discount-price">Rp 1.469.300</span>
+          <span class="discount-percentage">50% off</span>
+        </div>
+        <a href="https://wa.me/6289666004139?text=Saya+ingin+order+New+Balance+550-Green">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 19 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of stylish loafers in brown" class="w-full h-48 object-cover" height="300" src="airmax90.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Nike Air Max 90 Recrafted
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Nike Air Max 90 Recrafted is a modern version of the iconic Air Max 90, designed to celebrate its heritage while incorporating updated materials and construction for enhanced comfort and durability.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <div class="discount-tag">
+          <span class="original-price">Rp 2.800.000</span>
+          <span class="discount-price">Rp 1.400.000</span>
+          <span class="discount-percentage">50% off</span>
+        </div>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Nike+Air-Max+90+Recrafted">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 6 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of basketball shoes in red and black" class="w-full h-48 object-cover" height="300" src="palermo.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Puma Palermo 
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Puma Palermo is a sleek and stylish shoe model designed by Puma, inspired by retro aesthetics. Known for its clean lines, suede uppers, and classic rubber sole, it combines vintage charm with modern comfort, making it a popular choice for casual wear and street style enthusiasts.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <span class="text-gray-800 font-bold">
+        Rp 1.599.000
+       </span>
+        <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Puma+Palermo">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 28 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of basketball shoes in red and black" class="w-full h-48 object-cover" height="300" src="onitsuka.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Onitsuka Tiger Tokuten Black and White 
+      </h2>
+      <p class="text-gray-600 mt-2">
+      Onitsuka Tiger Black White is a classic sneaker design by Onitsuka Tiger. It features a sleek black base with the brand’s iconic white stripes, creating a timeless and versatile look. Known for its comfort and retro style, this model is popular for casual wear and adds a sporty touch to any outfit.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <span class="text-gray-800 font-bold">
+        Rp 1.800.000
+       </span>
+        <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Onitsuka+Tiger">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 12 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of basketball shoes in red and black" class="w-full h-48 object-cover" height="300" src="sambaOG.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Adidas Samba OG 
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Adidas Samba OG is a classic sneaker first introduced in the 1950s, originally designed for indoor soccer. Known for its timeless design, it features a premium leather upper, a suede toe cap, and the signature gum sole. Its minimalist style and versatility have made it a cultural icon.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <span class="text-gray-800 font-bold">
+        Rp 2.200.000
+       </span>
+        <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Adidas+Samba-OG+Black+and+White">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 19 Pairs
+      </div>
+     </div>
+    </div>
+    <h1 class="text-3xl font-bold text-white mb-6">
+    Collaboration Series
+   </h1>
+   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+</div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of comfortable slip-on shoes in gray" class="w-full h-48 object-cover" height="300" src="pg3.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Nike Paul George X Nasa
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Nike Paul George X NASA is a collaborative basketball sneaker inspired by NASA's space exploration. It features design elements that pay homage to astronaut suits and space missions, including bold color schemes, NASA logos, and technical details.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <span class="text-gray-800 font-bold">
+        Rp 3.599.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Nike+Paul-George+X+Nasa">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 2 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of comfortable slip-on shoes in gray" class="w-full h-48 object-cover" height="300" src="vans.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Vans X Sranger Things High-Top
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Vans x Stranger Things collaboration is a limited-edition collection that combines Vans' iconic skate-inspired footwear and apparel with designs inspired by the hit Netflix series Stranger Things. The collection features unique graphics and themes from the show.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <span class="text-gray-800 font-bold">
+        Rp 2.599.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Vans+X+Sranger+Things+High-Top">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 5 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of comfortable slip-on shoes in gray" class="w-full h-48 object-cover" height="300" src="pokemon.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Puma X Pokemon
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Puma x Pokémon collaboration is a special collection that combines Puma's iconic sportswear style with Pokémon-themed designs. It features sneakers, apparel, and accessories inspired by popular Pokémon like Pikachu, Bulbasaur, Charmander, and Squirtle.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <span class="text-gray-800 font-bold">
+        Rp 1.299.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Puma+X+Pokemon">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 5 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of elegant leather dress shoes in black" class="w-full h-48 object-cover" height="300" src="pgps.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Nike Paul George X PlayStation
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Nike Paul George x PlayStation collab is a special line of basketball shoes inspired by Paul George’s love for gaming.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 9.500.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Nike+Paul+George+PlayStation+41">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 3 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of elegant leather dress shoes in black" class="w-full h-48 object-cover" height="300" src="lebron.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Nike Lebron 18 X Space Jam
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The LeBron 18 x Space Jam is a special edition collaboration between Nike and the movie Space Jam: A New Legacy.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 3.499.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Nike+Lebron+18+X+Space-Jam">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 3 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of elegant leather dress shoes in black" class="w-full h-48 object-cover" height="300" src="ghost.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Reebok X Ghost Busters 
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Reebok x Ghostbusters collaboration features a collection of sneakers and apparel inspired by the iconic Ghostbusters franchise.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 6.399.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Reebok+X+Ghost+Busters ">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 1 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of trendy high-top sneakers in black" class="w-full h-48 object-cover" height="300" src="airjordan.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Nike Air Jordan X Dior
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Nike Air Jordan x Dior collaboration was a highly exclusive and limited-edition sneaker release that blended the iconic Air Jordan design with Dior's luxury fashion elements. Released in 2020, this collaboration featured premium materials, meticulous craftsmanship, and Dior branding alongside the classic Air Jordan.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 175.000.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Nike+Air+Jordan+X+Dior">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 1 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of comfortable slip-on shoes in gray" class="w-full h-48 object-cover" height="300" src="nb9060.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Bodega X New Balance 9060
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Bodega x New Balance 9060 is a collaboration between the Boston-based sneaker boutique Bodega and New Balance, blending modern design with vintage aesthetics. This limited-edition sneaker typically features unique colorways, premium materials, and intricate detailing that reflect Bodega's distinct style.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+      <div class="discount-tag">
+          <span class="original-price">Rp 9.700.000</span>
+          <span class="discount-price">Rp 4.825.000</span>
+          <span class="discount-percentage">50% off</span>
+        </div>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Bodega+X+New+Balance+9060">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 5 Pairs
+      </div>
+     </div>
+    </div>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+     <img alt="A pair of elegant ballet flats in nude color" class="w-full h-48 object-cover" height="300" src="superstar.jpg" width="400"/>
+     <div class="p-4">
+      <h2 class="text-xl font-bold text-gray-800">
+       Adidas Superstar X Korn
+      </h2>
+      <p class="text-gray-600 mt-2">
+      The Adidas Superstar x Korn collaboration is a special edition release that merges the iconic Adidas Superstar sneaker with the edgy style of the band Korn. Designed to appeal to both sneaker enthusiasts and Korn fans, this limited-edition product leverages nostalgia and the popularity of early 2000s nu-metal culture.
+      </p>
+      <div class="flex items-center justify-between mt-4">
+       <span class="text-gray-800 font-bold">
+        Rp 2.250.000
+       </span>
+       <a href="https://wa.me/6289666004139?text=Saya+ingin+order+Adidas+Superstar+X+Korn">
+       <button class="bg-blue-500 text-white px-3 py-1 rounded">
+        Order Now
+       </button>
+       </a>
+      </div>
+      <div class="mt-2 text-gray-600">
+        Stock: 7 Pairs
+      </div>
+     </div>
+    </div>
+   </div>
+  </main>
+  <footer class="bg-white shadow mt-8">
+   <div class="container mx-auto px-6 py-4">
+    <div class="flex justify-between items-center">
+     <div class="text-gray-800">
+      <h2 class="text-lg font-bold">Offline Store</h2>
+      <pre>
+        <p>Senayan City Lantai 3 Unit 20, Jalan Asia-Afrika, Gelora, Tanah Abang, Kota Jakarta Pusat, DKI Jakarta.
+        </p>
+     </div>
+    </div>
+   </div>
+  </footer>
+ </body>
+</html>
